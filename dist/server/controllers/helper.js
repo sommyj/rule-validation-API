@@ -1,9 +1,11 @@
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports.default = exports.validationResBody = void 0;
+"use strict";
 
-const execute = function execute(value, condition, conditionValue) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = exports.validationResBody = void 0;
+
+var execute = function execute(value, condition, conditionValue) {
   switch (condition) {
     case 'eq':
       return value === conditionValue;
@@ -25,22 +27,22 @@ const execute = function execute(value, condition, conditionValue) {
   }
 };
 
-const validationResBody = function validationResBody(message, status, error, field, fieldValue, condition, conditionValue, statusCode, res) {
+var validationResBody = function validationResBody(message, status, error, field, fieldValue, condition, conditionValue, statusCode, res) {
   return res.status(statusCode).send({
-    message,
-    status,
+    message: message,
+    status: status,
     data: {
       validation: {
-        error,
-        field,
+        error: error,
+        field: field,
         field_value: fieldValue,
-        condition,
-        condition_value: conditionValue,
-      },
-    },
+        condition: condition,
+        condition_value: conditionValue
+      }
+    }
   });
 };
 
 exports.validationResBody = validationResBody;
-const _default = execute;
-exports.default = _default;
+var _default = execute;
+exports["default"] = _default;

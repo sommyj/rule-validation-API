@@ -1,15 +1,17 @@
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports.default = void 0;
+"use strict";
 
-const invalidPayLoadResBody = function invalidPayLoadResBody(res) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var invalidPayLoadResBody = function invalidPayLoadResBody(res) {
   return res.status(400).send({
     message: 'Invalid JSON payload passed.',
     status: 'error',
-    data: null,
+    data: null
   });
 };
 
-const _default = invalidPayLoadResBody;
-exports.default = _default;
+var _default = invalidPayLoadResBody;
+exports["default"] = _default;

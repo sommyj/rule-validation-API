@@ -1,73 +1,83 @@
-const _interopRequireWildcard = require('@babel/runtime/helpers/interopRequireWildcard');
+"use strict";
 
-const _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
-const _typeof2 = _interopRequireDefault(require('@babel/runtime/helpers/typeof'));
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 
-const _helper = _interopRequireWildcard(require('./helper'));
+var _helper = _interopRequireDefault(require("../helper"));
 
-const dataValidation = function dataValidation(req, res, next) {
-  const _req$body = req.body;
-  const { rule } = _req$body;
-  const { data } = _req$body;
+var _helper2 = _interopRequireWildcard(require("./helper"));
 
-  if ((0, _typeof2.default)(req.body) !== 'object' && req.body === null || req.body.constructor === Array) {
-    return res.status(400).send({
-      message: 'Invalid JSON payload passed.',
-      status: 'error',
-      data: null,
-    });
-  }
+var dataValidation = function dataValidation(req, res, next) {
+  try {
+    var _req$body = req.body,
+        rule = _req$body.rule,
+        data = _req$body.data;
 
-  if (!rule) {
-    return (0, _helper.default)('rule', res);
-  }
+    if ((0, _typeof2["default"])(req.body) !== 'object' && req.body === null || req.body.constructor === Array) {
+      return (0, _helper["default"])(res);
+    } // eslint-disable-next-line no-restricted-syntax
 
-  if (!data) {
-    return (0, _helper.default)('data', res);
-  }
 
-  if ((0, _typeof2.default)(rule) !== 'object' || rule === null) {
-    return res.status(400).send({
-      message: 'rule should be an object.',
-      status: 'error',
-      data: null,
-    });
-  }
+    for (var _i = 0, _Object$keys = Object.keys(req.body); _i < _Object$keys.length; _i++) {
+      var bodyField = _Object$keys[_i];
+      if (!(bodyField === 'rule' || bodyField === 'data')) return (0, _helper["default"])(res);
+    }
 
-  if (!rule.field) {
-    return (0, _helper.default)('rule.field', res);
-  }
+    if (!rule && rule !== 0 && rule !== null && rule !== '') {
+      return (0, _helper2["default"])('rule', res);
+    }
 
-  if (!rule.condition) {
-    return (0, _helper.default)('rule.condition', res);
-  }
+    if (!data) {
+      return (0, _helper2["default"])('data', res);
+    }
 
-  if (!rule.condition_value) {
-    return (0, _helper.default)('rule.condition_value', res);
-  }
+    if ((0, _typeof2["default"])(rule) !== 'object' || rule === null || rule.constructor === Array) {
+      return res.status(400).send({
+        message: 'rule should be an object.',
+        status: 'error',
+        data: null
+      });
+    }
 
-  const validCondition = ['eq', 'neq', 'gt', 'gte', 'contains'];
+    if (!rule.field) {
+      return (0, _helper2["default"])('rule.field', res);
+    }
 
-  if (!validCondition.includes(rule.condition)) {
-    return (0, _helper.dataTypeResBody)('rule.condition', 'eq, neq, gt, gte or contains', res);
-  }
+    if (!rule.condition) {
+      return (0, _helper2["default"])('rule.condition', res);
+    }
 
-  if ((0, _typeof2.default)(data) !== 'object' || rule === null) {
-    if (data.constructor !== Array) {
-      if (typeof data !== 'string') {
-        return (0, _helper.dataTypeResBody)('data', 'an object, array or String', res);
+    if (!rule.condition_value) {
+      return (0, _helper2["default"])('rule.condition_value', res);
+    }
+
+    var validCondition = ['eq', 'neq', 'gt', 'gte', 'contains'];
+
+    if (!validCondition.includes(rule.condition)) {
+      return (0, _helper2.dataTypeResBody)('rule.condition', 'eq, neq, gt, gte or contains', res);
+    }
+
+    if ((0, _typeof2["default"])(data) !== 'object' || rule === null) {
+      if (data.constructor !== Array) {
+        if (typeof data !== 'string') {
+          return (0, _helper2.dataTypeResBody)('data', 'an object, array or String', res);
+        }
       }
     }
-  }
 
-  return next();
+    return next();
+  } catch (error) {
+    return (0, _helper["default"])(res);
+  }
 };
 
-const _default = dataValidation;
-exports.default = _default;
+var _default = dataValidation;
+exports["default"] = _default;
